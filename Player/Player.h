@@ -6,7 +6,8 @@
 class Player : public Character{
     public:
         Player(string, int);
-    void getAttack(Player &);
+    void getAttack(Character *target) override;
+    ~Player();
 
 
 };

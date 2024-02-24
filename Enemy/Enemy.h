@@ -5,7 +5,9 @@
 class Enemy : public Character{
     public:
         Enemy(string, int);
-        void getAttack(Enemy &);
+        void getAttack(Character *target) override;
+        ~Enemy();
+
 };
 
 #endif //JUEGO2_ENEMY_H

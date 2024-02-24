@@ -3,10 +3,15 @@
 
 Enemy::Enemy(string n, int h) : Character(n,h){}
 
-void Enemy::getAttack(Enemy &target){
-    int damage = rand() % 11 + 10;
-    target.health -= damage;
-    cout<<name<<" attack "<<target.getName()<<" and takes "<<damage<<" life"<<endl;
+Enemy::~Enemy() {
+    cout<<"\nDestructor Enemy"<<endl;
+}
+
+void Enemy::getAttack(Character *target){
+    int damage = rand() % 20 + 1;
+    int targetHealth = target->getHealth();
+    target->setHealth(targetHealth - damage);
+    cout<<name<<" attack "<<target->getName()<<" and takes "<<damage<<" life"<<endl;
     displayHealth();
-    target.displayHealth();
+    target->displayHealth();
 }

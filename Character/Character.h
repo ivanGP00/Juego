@@ -12,6 +12,7 @@ protected:
     int health;
 public:
     Character(string, int);
+    ~Character();
     void setName(string);
     string getName();
     void setHealth(int);
@@ -19,7 +20,7 @@ public:
     void setDamage(int);
     int getDamage();
 
-    virtual void getAttack(Character &);
+    virtual void getAttack(Character *target);
 
     void displayHealth();
 
