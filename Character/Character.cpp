@@ -1,45 +1,53 @@
 #include "Character.h"
-#include "iostream"
 
-using namespace std;
-
-Character::Character(string n, int h) {
+Character::Character(string n, int h, int a, int d, int s, bool i) {
     name=n;
     health=h;
+    attack=a;
+    defense=d;
+    speed=s;
+    isPlayer=i;
 }
 
-Character::~Character() {
-    cout<<"\nDestructor Character"<<endl;
-}
-
-void Character::setName(string n) {
-    name=n;
-}
-
-string Character::getName() {
+string Character::getName(){
     return name;
 }
-
-void Character::setHealth(int h) {
-    health=h;
+void Character::setName(string n){
+    name=n;
 }
 
 int Character::getHealth(){
     return health;
 }
-
-void Character::getAttack(Character *target){
-    int damage = rand() % 20 + 1;
-    target->health -= damage;
-    cout<<name<<" attack "<<target->getName()<<" and takes "<<damage<<" life"<<endl;
-    displayHealth();
-    target->displayHealth();
+void Character::setHealth(int h){
+    health=h;
 }
 
-void Character::displayHealth() {
-    cout<<name<<" have "<<health<<" life"<<endl;
+int Character::getAttack(){
+    return attack;
+}
+void Character::setAttack(int a){
+    attack=a;
 }
 
-bool Character::alive() {
-    return health > 0;
+int Character::getDefense(){
+    return defense;
+}
+void Character::setDefense(int d){
+    defense=d;
+}
+
+int Character::getSpeed(){
+    return speed;
+}
+void Character::setSpeed(int s){
+    speed=s;
+}
+
+string Character::toString() {
+    return "Name: " + name + "\nHealth: " + to_string(health) + "\nAttack: " + to_string(attack) + "\nDefense: " + to_string(defense) + "\nSpeed: " + to_string(speed) + "\n";
+}
+
+bool Character::getIsPlayer() {
+    return isPlayer;
 }

@@ -1,31 +1,41 @@
-
-#ifndef JUEGO2_CHARACTER_H
-#define JUEGO2_CHARACTER_H
+#ifndef JUEGO3_CHARACTER_H
+#define JUEGO3_CHARACTER_H
 #include <string>
-#include <ctime>
-
 using namespace std;
 
 class Character{
 protected:
     string name;
     int health;
+    int attack;
+    int defense;
+    int speed;
+    int isPlayer;
 public:
-    Character(string, int);
-    ~Character();
-    void setName(string);
+    Character(string , int , int , int , int , bool );
+
+    virtual void doAttack(Character *target) = 0;
+    virtual void takeDamage(int damage) = 0;
+
     string getName();
-    void setHealth(int);
+    void setName(string);
+
     int getHealth();
-    void setDamage(int);
-    int getDamage();
+    void setHealth(int);
 
-    virtual void getAttack(Character *target);
+    int getAttack();
+    void setAttack(int);
 
-    void displayHealth();
+    int getDefense();
+    void setDefense(int);
 
-    bool alive();
+    int getSpeed();
+    void setSpeed(int);
+
+    bool getIsPlayer();
+
+    string toString();
 };
 
 
-#endif //JUEGO2_CHARACTER_H
+#endif //JUEGO3_CHARACTER_H

@@ -52,30 +52,37 @@ build cmake_object_order_depends_target_Juego2: phony || CMakeFiles/Juego2.dir
 build CMakeFiles/Juego2.dir/Enemy/Enemy.cpp.obj: CXX_COMPILER__Juego2_unscanned_Debug C$:/Users/Alex/OneDrive/Escritorio/Juego2/Enemy/Enemy.cpp || cmake_object_order_depends_target_Juego2
   DEP_FILE = CMakeFiles\Juego2.dir\Enemy\Enemy.cpp.obj.d
   FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Enemy -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Player
+  INCLUDES = -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Character -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Combat -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Enemy -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Player
   OBJECT_DIR = CMakeFiles\Juego2.dir
   OBJECT_FILE_DIR = CMakeFiles\Juego2.dir\Enemy
 
 build CMakeFiles/Juego2.dir/Player/Player.cpp.obj: CXX_COMPILER__Juego2_unscanned_Debug C$:/Users/Alex/OneDrive/Escritorio/Juego2/Player/Player.cpp || cmake_object_order_depends_target_Juego2
   DEP_FILE = CMakeFiles\Juego2.dir\Player\Player.cpp.obj.d
   FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Enemy -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Player
+  INCLUDES = -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Character -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Combat -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Enemy -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Player
   OBJECT_DIR = CMakeFiles\Juego2.dir
   OBJECT_FILE_DIR = CMakeFiles\Juego2.dir\Player
 
 build CMakeFiles/Juego2.dir/main.cpp.obj: CXX_COMPILER__Juego2_unscanned_Debug C$:/Users/Alex/OneDrive/Escritorio/Juego2/main.cpp || cmake_object_order_depends_target_Juego2
   DEP_FILE = CMakeFiles\Juego2.dir\main.cpp.obj.d
   FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Enemy -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Player
+  INCLUDES = -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Character -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Combat -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Enemy -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Player
   OBJECT_DIR = CMakeFiles\Juego2.dir
   OBJECT_FILE_DIR = CMakeFiles\Juego2.dir
 
 build CMakeFiles/Juego2.dir/Character/Character.cpp.obj: CXX_COMPILER__Juego2_unscanned_Debug C$:/Users/Alex/OneDrive/Escritorio/Juego2/Character/Character.cpp || cmake_object_order_depends_target_Juego2
   DEP_FILE = CMakeFiles\Juego2.dir\Character\Character.cpp.obj.d
   FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
-  INCLUDES = -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Enemy -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Player
+  INCLUDES = -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Character -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Combat -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Enemy -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Player
   OBJECT_DIR = CMakeFiles\Juego2.dir
   OBJECT_FILE_DIR = CMakeFiles\Juego2.dir\Character
+
+build CMakeFiles/Juego2.dir/Combat/Combat.cpp.obj: CXX_COMPILER__Juego2_unscanned_Debug C$:/Users/Alex/OneDrive/Escritorio/Juego2/Combat/Combat.cpp || cmake_object_order_depends_target_Juego2
+  DEP_FILE = CMakeFiles\Juego2.dir\Combat\Combat.cpp.obj.d
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Character -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Combat -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Enemy -IC:/Users/Alex/OneDrive/Escritorio/Juego2/Player
+  OBJECT_DIR = CMakeFiles\Juego2.dir
+  OBJECT_FILE_DIR = CMakeFiles\Juego2.dir\Combat
 
 
 # =============================================================================
@@ -85,7 +92,7 @@ build CMakeFiles/Juego2.dir/Character/Character.cpp.obj: CXX_COMPILER__Juego2_un
 #############################################
 # Link the executable Juego2.exe
 
-build Juego2.exe: CXX_EXECUTABLE_LINKER__Juego2_Debug CMakeFiles/Juego2.dir/Enemy/Enemy.cpp.obj CMakeFiles/Juego2.dir/Player/Player.cpp.obj CMakeFiles/Juego2.dir/main.cpp.obj CMakeFiles/Juego2.dir/Character/Character.cpp.obj
+build Juego2.exe: CXX_EXECUTABLE_LINKER__Juego2_Debug CMakeFiles/Juego2.dir/Enemy/Enemy.cpp.obj CMakeFiles/Juego2.dir/Player/Player.cpp.obj CMakeFiles/Juego2.dir/main.cpp.obj CMakeFiles/Juego2.dir/Character/Character.cpp.obj CMakeFiles/Juego2.dir/Combat/Combat.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Juego2.dir
