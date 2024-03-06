@@ -1,9 +1,9 @@
 #ifndef JUEGO3_PLAYER_H
 #define JUEGO3_PLAYER_H
-#include "C:\Users\Alex\OneDrive\Escritorio\Juego2\Character/Character.h"
+#include "Character.h"
 #include "Enemy.h"
 #include <vector>
-#include "../ActionResult.h"
+#include "Action.h"
 
 
 class Enemy;
@@ -22,7 +22,7 @@ public:
     void emote();
     void levelUp();
     void gainExperience(int);
-    ActionResult takeAction(vector<Enemy*>enemies);
+    Action takeAction(vector<Enemy*>enemies);
 };
 
 

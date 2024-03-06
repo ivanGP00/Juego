@@ -17,4 +17,5 @@ add_executable(Juego2
         Character/Character.h
         Character/Character.cpp
         Combat/Combat.cpp
-        ActionResult.h)
+        Combat/Action.h
+)

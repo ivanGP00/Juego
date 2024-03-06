@@ -3,8 +3,9 @@
 #include "C:\Users\Alex\OneDrive\Escritorio\Juego2\Character/Character.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "../ActionResult.h"
+#include "Action.h"
 #include <vector>
+#include <queue>
 
 
 class Combat{
@@ -12,6 +13,9 @@ private:
     vector<Character *> participants;
     vector<Player *> teamMembers;
     vector<Enemy *> enemies;
+    //PRIORITY QUEUE DE ACCIONES
+    priority_queue<Action> actions;
+
     void prepareCombat();
     Character* getTarget(Character*);
 public:

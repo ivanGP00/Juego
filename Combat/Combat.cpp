@@ -54,7 +54,7 @@ void Combat::doCombat() {
             Character *target = nullptr;
 
             if((*participant)->getIsPlayer()){
-                ActionResult playerAction = ((Player*)*participant)->takeAction(enemies);
+                Action playerAction = ((Player*)*participant)->takeAction(enemies);
                 if(playerAction.target && playerAction.target->getHealth() <= 0){
                     participant = participants.erase(remove(participants.begin(), participants.end(), playerAction.target), participants.end());
                     enemies.erase(remove(enemies.begin(), enemies.end(), playerAction.target), enemies.end());

@@ -1,6 +1,6 @@
 #ifndef JUEGO3_ENEMY_H
 #define JUEGO3_ENEMY_H
-#include "C:\Users\Alex\OneDrive\Escritorio\Juego2\Character/Character.h"
+#include "Character.h"
 #include "Player.h"
 #include <vector>
 
@@ -12,6 +12,7 @@ public:
     void doAttack(Character *target) override;
     void takeDamage(int damage) override;
     Character* getTarget(vector<Player*> enemies);
+
 };
 
 

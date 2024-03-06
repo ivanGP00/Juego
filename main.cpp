@@ -6,7 +6,7 @@
 
 int main() {                    //name   vida atack defensa speed
 
-    Player *player = new Player("Victor", 20, 2, 3, 7);
+    Player *player = new Player("Victor", 20, 2, 3, 1);
     Enemy *enemy = new Enemy("Goblin", 20, 5, 3, 7);
     Enemy *enemy2 = new Enemy("Orco", 30, 8, 5, 2);
 

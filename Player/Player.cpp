@@ -70,7 +70,7 @@ Character* Player::getTarget(vector<Enemy *> enemies) {
     return enemies[targetIndex];
 }
 
-ActionResult Player::takeAction(vector<Enemy*>enemies) {
+Action Player::takeAction(vector<Enemy*>enemies) {
     int option =0;
     cout<<"Choose an action"<<endl;
     cout<<"1. Attack"<<endl;
@@ -97,5 +97,5 @@ ActionResult Player::takeAction(vector<Enemy*>enemies) {
             break;
     }
 
-    return ActionResult(target, fleed);
+    return Action(target, fleed, 0);
 }
