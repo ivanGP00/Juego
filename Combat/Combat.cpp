@@ -47,39 +47,31 @@ void Combat::prepareCombat() {
 void Combat::doCombat() {
     prepareCombat();
 
+    //este while es 1 iteracion por ronda
     while(enemies.size() != 0 && teamMembers.size() != 0){
         vector<Character*>::iterator participant = participants.begin();
 
+        //una iteracion por turno de cada participante (player y enemigo)
         while(participant != participants.end()){
             Character *target = nullptr;
-
+            Action currentAction;
             if((*participant)->getIsPlayer()){
-                Action playerAction = ((Player*)*participant)->takeAction(enemies);
-                if(playerAction.target && playerAction.target->getHealth() <= 0){
-                    participant = participants.erase(remove(participants.begin(), participants.end(), playerAction.target), participants.end());
-                    enemies.erase(remove(enemies.begin(), enemies.end(), playerAction.target), enemies.end());
-                }else if(playerAction.fleed){
-                    return;
-                }else{
-                    participant++;
-                }
+                currentAction = ((Player*)*participant)->takeAction(enemies);
+            }else{
+                currentAction = ((Enemy*)*participant)->takeAction(teamMembers);
             }
-            else{
-                target=((Enemy*)*participant)->getTarget(teamMembers);
-                (*participant)->doAttack(target);
-                if(target->getHealth() <= 0){
-                    participant = participants.erase(remove(participants.begin(), participants.end(), target), participants.end());
-                    if(target->getIsPlayer()){
-                        teamMembers.erase(remove(teamMembers.begin(), teamMembers.end(), target), teamMembers.end());
-                    }else{
-                        enemies.erase(remove(enemies.begin(), enemies.end(), target), enemies.end());
-                    }
-                }else{
-                    participant++;
-                }
-            }
+            actions.push(currentAction);
+            participant++;
         }
+
+        //AQUI SE EJECUTAN LAS ACCIONES
+            while(!actions.empty()){
+                Action currentAction = actions.top();
+                currentAction.action();
+                actions.pop();
+            }
     }
+
     if(enemies.size()==0){
         cout<<"You have won the combat"<<endl;
     }else{

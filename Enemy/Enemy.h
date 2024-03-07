@@ -3,7 +3,9 @@
 #include "Character.h"
 #include "Player.h"
 #include <vector>
+#include "Action.h"
 
+struct Action;
 class Player;
 
 class Enemy: public Character {
@@ -12,7 +14,7 @@ public:
     void doAttack(Character *target) override;
     void takeDamage(int damage) override;
     Character* getTarget(vector<Player*> enemies);
-
+    Action takeAction(vector<Player*> player);
 };
 
 

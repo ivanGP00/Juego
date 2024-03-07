@@ -5,7 +5,7 @@
 #include <vector>
 #include "Action.h"
 
-
+struct Action;
 class Enemy;
 
 class Player : public Character{
@@ -22,7 +22,7 @@ public:
     void emote();
     void levelUp();
     void gainExperience(int);
-    Action takeAction(vector<Enemy*>enemies);
+    Action takeAction(vector<Enemy*>enemies)    ;
 };
 
 

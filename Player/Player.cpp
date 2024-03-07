@@ -74,28 +74,25 @@ Action Player::takeAction(vector<Enemy*>enemies) {
     int option =0;
     cout<<"Choose an action"<<endl;
     cout<<"1. Attack"<<endl;
-    cout<<"2. Flee"<<endl;
+//    cout<<"2. Flee"<<endl;
     cin>>option;
     Character* target = nullptr;
-    bool fleed = false;
+
+    //ESTA VARIABLE GUARDA 1. QUE VOY A HACER - 2. CON QUE VELOCIDAD/PRIORIDAD
+    Action myAction;
+    myAction.speed = this->getSpeed();
+    //CREAR UNA VARIABLE QUE GUARDE UNA FUNCION QUE VA A SER EJECUTADA EN OTRO LUGAR
     switch (option) {
         case 1:
             target = getTarget(enemies);
-            doAttack(target);
-            break;
-        case 2:
-            fleed = flee(enemies);
-            if(flee(enemies)) {
-                cout << "You have fled" << endl;
-                exit(0);
-            }else {
-                cout<<"You couldnt flee"<<endl;
-            }
+            myAction.action = [this, target]() {
+                doAttack(target);
+            };
             break;
         default:
             cout<<"Invalid option you lost your turn"<<endl;
             break;
     }
 
-    return Action(target, fleed, 0);
+    return myAction;
 }

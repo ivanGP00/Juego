@@ -1,17 +1,20 @@
 #ifndef JUEGO3_ACTIONRESULT_H
 #define JUEGO3_ACTIONRESULT_H
+
+#include <functional>
 #include "Character.h"
 
-struct Action{
-    Character *target = nullptr;
-    bool fleed = false;
-    int speed=0;
+using namespace std;
 
-    Action(Character *_target, bool _fleed, int _speed){
-        target = _target;
-        fleed = _fleed;
+struct Action{
+    int speed=0;
+    function<void(void)> action = nullptr;
+
+    Action(function<void(void)> _action, int _speed){
+        action = _action;
         speed = _speed;
     }
+    Action(){};
 
     bool operator<(const Action &p) const{
         return this->speed < p.speed;
