@@ -6,7 +6,6 @@
 #include "Action.h"
 
 struct Action;
-
 class Player;
 
 class Enemy: public Character {

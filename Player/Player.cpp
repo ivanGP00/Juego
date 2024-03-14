@@ -3,6 +3,8 @@
 #include "iostream"
 #include "../Utils.h"
 
+
+
 using namespace std;
 using namespace combat_utils;
 
@@ -24,15 +26,14 @@ void Player::doAttack(Character *target) {
 
 void Player::takeDamage(int damage) {
     setHealth(health - damage);
+    cout<<"You have taken "<<damage<<" damage"<<endl;
     if(health <= 0){
         cout<<"You have die."<<endl;
-    }else{
-        cout<<"You have taken "<<damage<<" damage"<<endl;
     }
 }
 
 //SE DECIDE SI PLAYER PUEDE HUIR O NO
-bool Player::flee(vector <Enemy*> enemies) {
+void Player::flee(vector <Enemy*> enemies) {
     std::sort(enemies.begin(), enemies.end(), compareSpeed);
     Enemy* fastestEnemy = enemies[0];
 
@@ -51,7 +52,7 @@ bool Player::flee(vector <Enemy*> enemies) {
         fleed = chance > 75;
     }
 
-    return fleed;
+    this->fleed = fleed;
 }
 
 void Player::emote() {
@@ -78,6 +79,7 @@ Character* Player::getTarget(vector<Enemy *> enemies) {
     return enemies[targetIndex];
 }
 
+
 Action Player::takeAction( vector<Enemy*>enemies) {
     int option =0;
     cout<<"Choose an action"<<endl;
@@ -85,37 +87,36 @@ Action Player::takeAction( vector<Enemy*>enemies) {
     cout<<"2. Flee"<<endl;
     cin>>option;
     Character* target = nullptr;
-    bool fleed = false;
 
-    //ESTA VARIABLE GUARDA 1. QUE VOY  A HACER - 2. CON QUE VELOCIDAD/PRIORIDAD
+    //ESTA VARIABLE GUARDA
+    // 1. QUE VOY  A HACER.
+    //2. CON QUE VELOCIDAD/PRIORIDAD.
     Action myAction;
-    //------------ACTION?-----------
-
+    //2
     myAction.speed = this->getSpeed();
+    myAction.suscriber = this;
+
     switch (option) {
         case 1:
             target = getTarget(enemies);
+            myAction.target=target;
             //action esta guardando un evento que se ejecutara en un futuro,
-            //se ejecutara ya que COMBAT lo permite o ya que sea el momento
-            myAction.action = [this, &target](){
+            //1
+            myAction.action = [this, target](){
                 //Aun no se ejecuta doAttack, se ejecutara cuando combat lo pida,
                 // solo se esta guardando para ejecutarla despues.
                 doAttack(target);
             };
             break;
         case 2:
-            fleed = flee(enemies);
-            if(fleed) {
-                cout << "You have fled" << endl;
-            }else {
-                cout<<"You couldnt flee"<<endl;
-            }
+            myAction.action = [this, enemies]{
+                flee(enemies);
+            };
             break;
         default:
             cout<<"Invalid option you lost your turn"<<endl;
             break;
     }
 
-    return Action(target, fleed, 0);
-    //-----------PORQUE REGRESA ACTION-------------
+    return myAction;
 }

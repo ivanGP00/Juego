@@ -11,7 +11,7 @@ int main() {
     cin>>player1;
 
     cout<<"Enemy 1: ";
-    cin>>enemy11;
+    cin>>enemy1;
     cout<<"Enemy 2: ";
     cin>>enemy11;
     cout<<endl;
@@ -20,8 +20,8 @@ int main() {
     system("pause");
 
                                 //name   vida atack defensa speed
-    Player *player = new Player(player1, 15, 5, 3, 10);
-    Enemy *enemy = new Enemy(enemy11, 20, 5, 3, 7);
+    Player *player = new Player(player1, 50, 15, 10, 10);
+    Enemy *enemy = new Enemy(enemy1, 20, 5, 3, 7);
     Enemy *enemy2 = new Enemy(enemy11, 30, 8, 4, 2);
 
     vector<Character *> participants;
