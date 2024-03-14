@@ -16,13 +16,16 @@ public:
     Player(string, int, int, int, int);
     void doAttack(Character *target) override;
     void takeDamage(int damage) override;
+
     Character* getTarget(vector<Enemy *> enemies);
 
-    bool flee(vector <Enemy*> enemies);
+
+    void flee(vector <Enemy*> enemies);
     void emote();
     void levelUp();
     void gainExperience(int);
-    Action takeAction(vector<Enemy*>enemies)    ;
+
+    Action takeAction(vector<Enemy*>enemies);
 };
 
 

@@ -3,9 +3,12 @@
 #include "iostream"
 #include "../Utils.h"
 
+
+
 using namespace std;
 using namespace combat_utils;
 
+//COMPARA VELOCIDADES ENTRE LOS ENEMYS, Y LOS ACOMODA DE MAYOR A MENOR
 bool compareSpeed(Enemy *a, Enemy *b){
     return a->getSpeed() > b->getSpeed();
 }
@@ -23,28 +26,33 @@ void Player::doAttack(Character *target) {
 
 void Player::takeDamage(int damage) {
     setHealth(health - damage);
+    cout<<"You have taken "<<damage<<" damage"<<endl;
     if(health <= 0){
         cout<<"You have die."<<endl;
-    }else{
-        cout<<"You have taken "<<damage<<" damage"<<endl;
     }
 }
 
-bool Player::flee(vector <Enemy*> enemies) {
+//SE DECIDE SI PLAYER PUEDE HUIR O NO
+void Player::flee(vector <Enemy*> enemies) {
     std::sort(enemies.begin(), enemies.end(), compareSpeed);
     Enemy* fastestEnemy = enemies[0];
 
+    //SE CREA LA VARIABLE FLEED PARA SABER SI ES MAS RAPIDO PLAYER QUE ENEMY
+    //SE INICIALIZA EN FALSE, PARA LUEGO SI SE CUMPLE LA CONDICION DE ESCAPAR
+    //SE DECLARA COMO TRUE Y SI NO SE CUMPLE, SE QUEDA COMO FALSE DE QUE NO ESCAPO
     bool fleed = false;
     if(this->getSpeed() > fastestEnemy->getSpeed()){
         fleed = true;
     }else{
+        //SI EL PLAYER ES MAS LENTO QUE EL ENEMY, SE CREA UN PORCENTAJE, PARA SABER
+        //LA CHANCE QUE TIENES DE ESCAPAR
         srand(time(NULL));
         int chance = rand()%100;
         cout<<"chance: "<<chance<<endl;
-        fleed = chance > 99;
+        fleed = chance > 75;
     }
 
-    return fleed;
+    this->fleed = fleed;
 }
 
 void Player::emote() {
@@ -59,6 +67,7 @@ void Player::levelUp() {
     setSpeed(getSpeed() + 5);
 }
 
+//EL PLAYER ELIGE A QUE ENEMIGO ATACAR
 Character* Player::getTarget(vector<Enemy *> enemies) {
     cout<<"Choose a target"<<endl;
     int targetIndex=0;
@@ -70,23 +79,38 @@ Character* Player::getTarget(vector<Enemy *> enemies) {
     return enemies[targetIndex];
 }
 
-Action Player::takeAction(vector<Enemy*>enemies) {
+
+Action Player::takeAction( vector<Enemy*>enemies) {
     int option =0;
     cout<<"Choose an action"<<endl;
     cout<<"1. Attack"<<endl;
-//    cout<<"2. Flee"<<endl;
+    cout<<"2. Flee"<<endl;
     cin>>option;
     Character* target = nullptr;
 
-    //ESTA VARIABLE GUARDA 1. QUE VOY A HACER - 2. CON QUE VELOCIDAD/PRIORIDAD
+    //ESTA VARIABLE GUARDA
+    // 1. QUE VOY  A HACER.
+    //2. CON QUE VELOCIDAD/PRIORIDAD.
     Action myAction;
+    //2
     myAction.speed = this->getSpeed();
-    //CREAR UNA VARIABLE QUE GUARDE UNA FUNCION QUE VA A SER EJECUTADA EN OTRO LUGAR
+    myAction.suscriber = this;
+
     switch (option) {
         case 1:
             target = getTarget(enemies);
-            myAction.action = [this, target]() {
+            myAction.target=target;
+            //action esta guardando un evento que se ejecutara en un futuro,
+            //1
+            myAction.action = [this, target](){
+                //Aun no se ejecuta doAttack, se ejecutara cuando combat lo pida,
+                // solo se esta guardando para ejecutarla despues.
                 doAttack(target);
+            };
+            break;
+        case 2:
+            myAction.action = [this, enemies]{
+                flee(enemies);
             };
             break;
         default:

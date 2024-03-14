@@ -15,6 +15,7 @@ public:
     void takeDamage(int damage) override;
     Character* getTarget(vector<Player*> enemies);
     Action takeAction(vector<Player*> player);
+
 };
 
 

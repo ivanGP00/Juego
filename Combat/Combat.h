@@ -1,6 +1,6 @@
 #ifndef JUEGO3_COMBAT_H
 #define JUEGO3_COMBAT_H
-#include "C:\Users\Alex\OneDrive\Escritorio\Juego2\Character/Character.h"
+#include "../Character/Character.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Action.h"
@@ -16,9 +16,16 @@ private:
     //PRIORITY QUEUE DE ACCIONES
     priority_queue<Action> actions;
 
+
     void prepareCombat();
     Character* getTarget(Character*);
-public:
+    void registerActions();
+    void executeActions();
+
+    void checkParticipantStatus(Character* participant);
+    void checkForFlee(Character* character);
+
+        public:
     Combat(vector<Character *> _participants);
     Combat(vector<Player *>_teamMembers, vector<Enemy*> _enemies);
     Combat();

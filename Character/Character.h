@@ -1,6 +1,9 @@
 #ifndef JUEGO3_CHARACTER_H
 #define JUEGO3_CHARACTER_H
 #include <string>
+#include <memory>
+#include "Action.h"
+#include <vector>
 using namespace std;
 
 class Character{
@@ -10,12 +13,14 @@ protected:
     int attack;
     int defense;
     int speed;
-    int isPlayer;
+    bool isPlayer;
+    bool fleed;
 public:
     Character(string , int , int , int , int , bool );
 
     virtual void doAttack(Character *target) = 0;
     virtual void takeDamage(int damage) = 0;
+
 
     string getName();
     void setName(string);
@@ -35,6 +40,8 @@ public:
     bool getIsPlayer();
 
     string toString();
+
+    bool hasFleed();
 };
 
 

@@ -27,6 +27,7 @@ void Enemy::takeDamage(int damage) {
     }
 }
 
+//EL ENEMIGO ATACA AL PLAYER CON MENOS VIDA
 Character* Enemy::getTarget(vector<Player *> teamMembers) {
     //aqui obtiene al miembro del equipo con menos vida para atacarlo
     int targetIndex=0;
@@ -40,13 +41,16 @@ Character* Enemy::getTarget(vector<Player *> teamMembers) {
     return teamMembers[targetIndex];
 }
 
-Action Enemy::takeAction(vector<Player*> player) {
+Action Enemy::takeAction(vector<Player *> player) {
     Action myAction;
     myAction.speed = getSpeed();
+    myAction.suscriber = this;
     Character* target = getTarget(player);
+    myAction.target=target;
     myAction.action = [this, target](){
         doAttack(target);
     };
 
     return myAction;
 }
+
