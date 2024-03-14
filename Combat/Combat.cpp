@@ -1,13 +1,13 @@
 #include "Combat.h"
 #include <iostream>
 #include <algorithm>
-
 using namespace std;
-
 bool compareSpeed(Character *a, Character *b){
     return a->getSpeed() > b->getSpeed();
 }
 
+//SE SEPARAN LOS PARTICIPANTES EN SU RESPECTIVO VECTOR DEPENDIENDO SI ES
+// ENEMY O PLAYER.
 Combat::Combat(vector<Character *> _participants) {
     participants = std::move(_participants);
     for(auto participant : participants){
@@ -18,12 +18,12 @@ Combat::Combat(vector<Character *> _participants) {
         }
     }
 }
-
 Combat::Combat(vector<Player *> _teamMemebers, vector<Enemy *> _enemies) {
     teamMembers = std::move(_teamMemebers);
     enemies = std::move(_enemies);
 }
 
+//AGREGAS A LOS PERSONAJES EN EL VECTOR PARTICIPANT Y LUEGO EN SU RESPECTIVO VECTOR
 void Combat::addParticipants(Character *participant) {
     participants.push_back(participant);
     if(participant->getIsPlayer()){
@@ -37,49 +37,59 @@ Combat::Combat() {
     participants = vector<Character *>();
 }
 
-//SORT FUNCIONA PARA ITERAR AL VECTOR, SE NECESITA
-//EL INICIO DEL VECTOR (BEGIN), EL FINAL DEL VECTOR (END)
-//Y UNA FUNCION PARA COMPARAR LAS DOS VELOCIDADES.
+//ANTES DE INICIAR EL COMBATE, SE ACOMODAN LOS PARTICIPANTES
+// DE MAYOR VELOCIDAD A MENOR EN EL VECTOR PARTICIPANT
 void Combat::prepareCombat() {
     sort(participants.begin(), participants.end(), compareSpeed);
 }
 
+
 void Combat::doCombat() {
     prepareCombat();
 
-    //este while es 1 iteracion por ronda
     while(enemies.size() != 0 && teamMembers.size() != 0){
         vector<Character*>::iterator participant = participants.begin();
 
-        //una iteracion por turno de cada participante (player y enemigo)
         while(participant != participants.end()){
             Character *target = nullptr;
-            Action currentAction;
+
             if((*participant)->getIsPlayer()){
-                currentAction = ((Player*)*participant)->takeAction(enemies);
-            }else{
-                currentAction = ((Enemy*)*participant)->takeAction(teamMembers);
+                Action playerAction = ((Player*)*participant)->takeAction(enemies);
+
+                //Si hay un TARGET y target.getHealth es menor o igual a 0-
+                if(playerAction.target && playerAction.target->getHealth() <= 0){
+                    participant = participants.erase(remove(participants.begin(), participants.end(), playerAction.target), participants.end());
+                    enemies.erase(remove(enemies.begin(), enemies.end(), playerAction.target), enemies.end());
+                }else if(playerAction.fleed){
+                    return;
+                }else{
+                    participant++;
+                }
             }
-            actions.push(currentAction);
-            participant++;
+            else{
+                target=((Enemy*)*participant)->getTarget(teamMembers);
+                (*participant)->doAttack(target);
+                if(target->getHealth() <= 0){
+                    participant = participants.erase(remove(participants.begin(), participants.end(), target), participants.end());
+                    if(target->getIsPlayer()){
+                        teamMembers.erase(remove(teamMembers.begin(), teamMembers.end(), target), teamMembers.end());
+                    }else{
+                        enemies.erase(remove(enemies.begin(), enemies.end(), target), enemies.end());
+                    }
+                }else{
+                    participant++;
+                }
+            }
         }
-
-        //AQUI SE EJECUTAN LAS ACCIONES
-            while(!actions.empty()){
-                Action currentAction = actions.top();
-                currentAction.action();
-                actions.pop();
-            }
     }
-
     if(enemies.size()==0){
         cout<<"You have won the combat"<<endl;
     }else{
         cout<<"The enemies have won the combat -- GAME OVER"<<endl;
     }
-
 }
 
+//SE MUESTRAN TODOS LOS PARTICIPANTES
 string Combat::participantsToString() {
     string result="";
     for(int i=0;i<participants.size(); i++){
