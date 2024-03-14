@@ -4,16 +4,12 @@
 #include <functional>
 #include "Character.h"
 
-class Character;
-
 using namespace std;
 
 struct Action{
+    Character *target = nullptr;
+    bool fleed = false;
     int speed=0;
-    //suscriber revisa el estado de los personajes
-    Character* suscriber = nullptr;
-    Character* target = nullptr;
-
     //-Se crea la variable *action* que lo que hara sera guardar una funcion.
 
     //-Por asi decirlo, seria de la siguiente manera:
@@ -26,11 +22,10 @@ struct Action{
     //-el primer void se refiere a que no recibira nada y el segundo a que no retorna nada
     std::function<void(void)> action = nullptr;
 
-    Action(std::function<void(void)> _action, int _speed, Character* _suscriber, Character* _target){
-        action = _action;
-        speed = _speed;
-        suscriber = _suscriber;
+    Action(Character *_target, bool _fleed, int _speed){
         target = _target;
+        fleed = _fleed;
+        speed = _speed;
     }
 
     Action(){};

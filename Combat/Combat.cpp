@@ -47,70 +47,45 @@ void Combat::prepareCombat() {
 void Combat::doCombat() {
     prepareCombat();
 
-    //iteracion por ronda
     while(enemies.size() != 0 && teamMembers.size() != 0){
-        registerActions();
-        executeActions();
+        vector<Character*>::iterator participant = participants.begin();
+
+        while(participant != participants.end()){
+            Character *target = nullptr;
+
+            if((*participant)->getIsPlayer()){
+                Action playerAction = ((Player*)*participant)->takeAction(enemies);
+
+                //Si hay un TARGET y target.getHealth es menor o igual a 0-
+                if(playerAction.target && playerAction.target->getHealth() <= 0){
+                    participant = participants.erase(remove(participants.begin(), participants.end(), playerAction.target), participants.end());
+                    enemies.erase(remove(enemies.begin(), enemies.end(), playerAction.target), enemies.end());
+                }else if(playerAction.fleed){
+                    return;
+                }else{
+                    participant++;
+                }
+            }
+            else{
+                target=((Enemy*)*participant)->getTarget(teamMembers);
+                (*participant)->doAttack(target);
+                if(target->getHealth() <= 0){
+                    participant = participants.erase(remove(participants.begin(), participants.end(), target), participants.end());
+                    if(target->getIsPlayer()){
+                        teamMembers.erase(remove(teamMembers.begin(), teamMembers.end(), target), teamMembers.end());
+                    }else{
+                        enemies.erase(remove(enemies.begin(), enemies.end(), target), enemies.end());
+                    }
+                }else{
+                    participant++;
+                }
+            }
+        }
     }
     if(enemies.size()==0){
         cout<<"You have won the combat"<<endl;
     }else{
         cout<<"The enemies have won the combat -- GAME OVER"<<endl;
-    }
-}
-
-void Combat::registerActions(){
-    vector<Character*>::iterator participant = participants.begin();
-    //iteracion por turno
-    while(participant != participants.end()){
-        Character *target = nullptr;
-        Action currentAction;
-
-        if((*participant)->getIsPlayer()){
-            currentAction = ((Player*)*participant)->takeAction(enemies);
-        }else{
-            currentAction = ((Enemy*)*participant)->takeAction(teamMembers);
-        }
-
-        //se guardan todas las acciones, en la priority queue
-        actions.push(currentAction);
-        participant++;
-    }
-}
-
-void Combat::executeActions() {
-    while(!actions.empty()){
-        Action currentAction = actions.top();
-        currentAction.action();
-        checkForFlee(currentAction.suscriber);
-        checkParticipantStatus(currentAction.suscriber);
-        checkParticipantStatus(currentAction.target);
-        actions.pop();
-    }
-}
-
-void Combat::checkParticipantStatus(Character* participant) {
-    if(participant->getHealth() <= 0){
-        if(participant->getIsPlayer()){
-            teamMembers.erase(remove(teamMembers.begin(), teamMembers.end(), participant), teamMembers.end());
-        }else{
-            enemies.erase(remove(enemies.begin(), enemies.end(), participant), enemies.end());
-        }
-        participants.erase(remove(participants.begin(), participants.end(), participant), participants.end());
-    }
-}
-
-void Combat::checkForFlee(Character *character) {
-    bool fleed = character->hasFleed();
-    if(fleed){
-        if(character->getIsPlayer()){
-            cout<<"You have fled the combat"<<endl;
-            teamMembers.erase(remove(teamMembers.begin(), teamMembers.end(), character), teamMembers.end());
-        }else{
-            cout<<character->getName()<<" has fled the combat"<<endl;
-            enemies.erase(remove(enemies.begin(), enemies.end(), character), enemies.end());
-        }
-        participants.erase(remove(participants.begin(), participants.end(), character), participants.end());
     }
 }
 

@@ -17,14 +17,12 @@ public:
     void doAttack(Character *target) override;
     void takeDamage(int damage) override;
 
-    Character* getTarget(vector<Enemy *> enemies);
-
-
-    void flee(vector <Enemy*> enemies);
+    bool flee(vector <Enemy*> enemies);
     void emote();
     void levelUp();
     void gainExperience(int);
 
+    Character* getTarget(vector<Enemy *> enemies);
     Action takeAction(vector<Enemy*>enemies);
 };
 
