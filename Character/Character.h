@@ -15,6 +15,7 @@ protected:
     int speed;
     bool isPlayer;
     bool fleed;
+    bool fleedEnemy;
 public:
     Character(string , int , int , int , int , bool );
 

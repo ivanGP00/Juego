@@ -5,24 +5,13 @@
 #include "Combat.h"
 
 int main() {
-    string player1, enemy1, enemy11;
-    cout<<"\nEnter the name of the participants.";
-    cout<<"\nPlayer 1: ";
-    cin>>player1;
-
-    cout<<"Enemy 1: ";
-    cin>>enemy1;
-    cout<<"Enemy 2: ";
-    cin>>enemy11;
-    cout<<endl;
-
+    cout<<"\n";
     cout<<"\tWELCOME TO MY GAME\n"<<endl;
-    system("pause");
 
                                 //name   vida atack defensa speed
-    Player *player = new Player(player1, 50, 15, 10, 10);
-    Enemy *enemy = new Enemy(enemy1, 20, 5, 3, 7);
-    Enemy *enemy2 = new Enemy(enemy11, 30, 8, 4, 2);
+    Player *player = new Player("Canelo", 50, 10, 7, 8);
+    Enemy *enemy = new Enemy("Mcgregor", 16, 5, 3, 7);
+    Enemy *enemy2 = new Enemy("Jones", 30, 5, 4, 2);
 
     vector<Character *> participants;
     participants.push_back(player);
@@ -38,6 +27,7 @@ int main() {
 
     delete player;
     delete enemy;
+    delete enemy2;
     delete combat;
 
     return 0;

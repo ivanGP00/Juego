@@ -12,9 +12,11 @@ Enemy::Enemy(string name, int health, int attack, int defense, int speed) : Char
 }
 
 void Enemy::doAttack(Character *target) {
-    int rolledAttack = getRollAttack(getAttack());
-    int trueDamage = target->getDefense() > rolledAttack ? 0 : rolledAttack - target->getDefense();
-    target->takeDamage(trueDamage);
+    if (!hasEscapedSuccessfully()) { // Verifica si el enemigo ha huido antes de atacar
+        int rolledAttack = getRollAttack(getAttack());
+        int trueDamage = target->getDefense() > rolledAttack ? 0 : rolledAttack - target->getDefense();
+        target->takeDamage(trueDamage);
+    }
 }
 
 void Enemy::takeDamage(int damage) {
@@ -50,7 +52,26 @@ Action Enemy::takeAction(vector<Player *> player) {
     myAction.action = [this, target](){
         doAttack(target);
     };
+    tryToFlee();
 
     return myAction;
+}
+
+void Enemy::tryToFlee() {
+    srand(time(NULL));
+    int chance = rand() % 100;
+    // Si el enemigo tiene menos de 15 de vida y la probabilidad es
+    // mayor a 80, huye
+    if (getHealth() < 15 && chance > 80) {
+        setEscaped(true);
+    }
+}
+
+bool Enemy::hasEscapedSuccessfully() {
+    return hasEscaped;
+}
+
+void Enemy::setEscaped(bool escaped) {
+    hasEscaped = escaped;
 }
 

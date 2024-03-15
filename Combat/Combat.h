@@ -23,15 +23,18 @@ private:
     void executeActions();
 
     void checkParticipantStatus(Character* participant);
-    void checkForFlee(Character* character);
+    void checkForFlee(Character* player);
 
-        public:
+
+public:
+    bool compareHealth(Enemy *a, Enemy *b);
     Combat(vector<Character *> _participants);
     Combat(vector<Player *>_teamMembers, vector<Enemy*> _enemies);
     Combat();
     void addParticipants(Character *);
     void doCombat();
     string participantsToString();
+    void fleeEnemy(Enemy* enemy);
 
 };
 

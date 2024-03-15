@@ -8,6 +8,7 @@ Character::Character(string n, int h, int a, int d, int s, bool i) {
     speed=s;
     isPlayer=i;
     fleed=false;
+    fleedEnemy=false;
 }
 
 string Character::getName(){
@@ -56,3 +57,4 @@ bool Character::getIsPlayer() {
 bool Character::hasFleed() {
     return fleed;
 }
+

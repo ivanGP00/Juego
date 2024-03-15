@@ -5,6 +5,9 @@ using namespace std;
 bool compareSpeed(Character *a, Character *b){
     return a->getSpeed() > b->getSpeed();
 }
+bool compareHealth(Enemy *a, Enemy *b){
+    return a->getHealth() > b->getHealth();
+}
 
 //SE SEPARAN LOS PARTICIPANTES EN SU RESPECTIVO VECTOR DEPENDIENDO SI ES
 // ENEMY O PLAYER.
@@ -79,6 +82,10 @@ void Combat::registerActions(){
 }
 
 void Combat::executeActions() {
+    //verificamos si enemy huyo
+    for (auto& enemy : enemies) {
+        fleeEnemy(enemy);
+    }
     while(!actions.empty()){
         Action currentAction = actions.top();
         currentAction.action();
@@ -100,17 +107,40 @@ void Combat::checkParticipantStatus(Character* participant) {
     }
 }
 
-void Combat::checkForFlee(Character *character) {
-    bool fleed = character->hasFleed();
-    if(fleed){
-        if(character->getIsPlayer()){
-            cout<<"You have fled the combat"<<endl;
-            teamMembers.erase(remove(teamMembers.begin(), teamMembers.end(), character), teamMembers.end());
-        }else{
-            cout<<character->getName()<<" has fled the combat"<<endl;
-            enemies.erase(remove(enemies.begin(), enemies.end(), character), enemies.end());
+//ENEMY HUYE
+void Combat::fleeEnemy(Enemy* enemy) {
+    if (enemy->getHealth() < 15) {
+        srand(time(NULL));
+        int escape_chance = rand() % 100 + 1;
+        cout << "Chance of " << enemy->getName() << " escaping: " << escape_chance << endl;
+        if (escape_chance > 40) {
+            cout << enemy->getName() << " has fled the combat." << endl;
+            // Elimina al enemigo que ha escapado
+            participants.erase(remove(participants.begin(), participants.end(), enemy), participants.end());
+            enemies.erase(remove(enemies.begin(), enemies.end(), enemy), enemies.end());
+            //si delete no funciona
+            actions.pop();
+            return;
+
+        } else {
+            cout << enemy->getName() << " can't flee." << endl;
         }
-        participants.erase(remove(participants.begin(), participants.end(), character), participants.end());
+    }
+}
+
+
+//PLAYER HUYE
+void Combat::checkForFlee(Character *player) {
+    bool fleed = player->hasFleed();
+    if(fleed){
+        if(player->getIsPlayer()){
+            cout<<"You have fled the combat"<<endl;
+            teamMembers.erase(remove(teamMembers.begin(), teamMembers.end(), player), teamMembers.end());
+        }else{
+            cout<<player->getName()<<" has fled the combat"<<endl;
+            enemies.erase(remove(enemies.begin(), enemies.end(), player), enemies.end());
+        }
+        participants.erase(remove(participants.begin(), participants.end(), player), participants.end());
     }
 }
 
@@ -122,3 +152,5 @@ string Combat::participantsToString() {
     }
     return result;
 }
+
+

@@ -26,7 +26,11 @@ public:
     void gainExperience(int);
 
     Action takeAction(vector<Enemy*>enemies);
+    bool canFlee();
+
 };
+
+
 
 
 
