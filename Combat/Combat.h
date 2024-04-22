@@ -24,10 +24,10 @@ private:
 
     void checkParticipantStatus(Character* participant);
     void checkForFlee(Character* player);
+    void checkForFleeEnemy(Character *enemy);
 
 
 public:
-    bool compareHealth(Enemy *a, Enemy *b);
     Combat(vector<Character *> _participants);
     Combat(vector<Player *>_teamMembers, vector<Enemy*> _enemies);
     Combat();

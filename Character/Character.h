@@ -8,23 +8,23 @@ using namespace std;
 
 class Character{
 protected:
-    string name;
+    char name[30];
     int health;
     int attack;
     int defense;
     int speed;
     bool isPlayer;
     bool fleed;
-    bool fleedEnemy;
+
 public:
-    Character(string , int , int , int , int , bool );
+    Character(char[30], int , int , int , int , bool );
 
     virtual void doAttack(Character *target) = 0;
     virtual void takeDamage(int damage) = 0;
 
 
-    string getName();
-    void setName(string);
+    char* getName();
+    void setName(char[30]);
 
     int getHealth();
     void setHealth(int);

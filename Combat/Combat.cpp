@@ -5,9 +5,7 @@ using namespace std;
 bool compareSpeed(Character *a, Character *b){
     return a->getSpeed() > b->getSpeed();
 }
-bool compareHealth(Enemy *a, Enemy *b){
-    return a->getHealth() > b->getHealth();
-}
+
 
 //SE SEPARAN LOS PARTICIPANTES EN SU RESPECTIVO VECTOR DEPENDIENDO SI ES
 // ENEMY O PLAYER.
@@ -82,17 +80,24 @@ void Combat::registerActions(){
 }
 
 void Combat::executeActions() {
-    //verificamos si enemy huyo
-    for (auto& enemy : enemies) {
-        fleeEnemy(enemy);
-    }
-    while(!actions.empty()){
+    //Aqui se ejecutan las acciones
+    while(!actions.empty()) {
         Action currentAction = actions.top();
         currentAction.action();
         checkForFlee(currentAction.suscriber);
-        checkParticipantStatus(currentAction.suscriber);
-        checkParticipantStatus(currentAction.target);
-        actions.pop();
+        if(currentAction.target!= nullptr)
+        {
+            checkParticipantStatus(currentAction.suscriber);
+            checkParticipantStatus(currentAction.target);
+            actions.pop();
+        }
+        else{
+            while (!actions.empty()) {
+                actions.pop();
+            }
+        }
+
+
     }
 }
 
@@ -107,29 +112,6 @@ void Combat::checkParticipantStatus(Character* participant) {
     }
 }
 
-//ENEMY HUYE
-void Combat::fleeEnemy(Enemy* enemy) {
-    if (enemy->getHealth() < 15) {
-        srand(time(NULL));
-        int escape_chance = rand() % 100 + 1;
-        cout << "Chance of " << enemy->getName() << " escaping: " << escape_chance << endl;
-        if (escape_chance > 40) {
-            cout << enemy->getName() << " has fled the combat." << endl;
-            // Elimina al enemigo que ha escapado
-            participants.erase(remove(participants.begin(), participants.end(), enemy), participants.end());
-            enemies.erase(remove(enemies.begin(), enemies.end(), enemy), enemies.end());
-            //si delete no funciona
-            actions.pop();
-            return;
-
-        } else {
-            cout << enemy->getName() << " can't flee." << endl;
-        }
-    }
-}
-
-
-//PLAYER HUYE
 void Combat::checkForFlee(Character *player) {
     bool fleed = player->hasFleed();
     if(fleed){

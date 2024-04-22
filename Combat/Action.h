@@ -23,7 +23,8 @@ struct Action{
 
     //-CADA QUE ESCRIBAS O LLAMES *ACTION()*, SE EJECUTARA LA FUNCION
 
-    //-el primer void se refiere a que no recibira nada y el segundo a que no retorna nada
+    //-el primer void se refiere a que no recibira nada y el
+    // segundo a que no retorna nada
     std::function<void(void)> action = nullptr;
 
     Action(std::function<void(void)> _action, int _speed, Character* _suscriber, Character* _target){

@@ -13,22 +13,23 @@ private:
     //bandera para saber si enemy huyo.
     bool hasEscaped;
 public:
-    Enemy(string, int, int, int, int);
+    Enemy(char[30], int, int, int, int);
     void doAttack(Character *target) override;
     void takeDamage(int damage) override;
     Character* getTarget(vector<Player*> enemies);
     Action takeAction(vector<Player*> player);
-
-    void tryToFlee();
-
+    int getRandomNumber();
 
 
-    // Añade una función para verificar si el enemigo ha huido
-    bool hasEscapedSuccessfully();
-    void setEscaped(bool escaped);
+//Para obtener el estado de salud de mi enemigo
+    int MaxHealth;
+
+    void flee(vector <Player*> teamMembers);
+
+    void failScapeEnemy(vector<Player *> player);
+
+
 };
-
-
 
 
 #endif //JUEGO3_ENEMY_H

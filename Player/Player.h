@@ -13,7 +13,7 @@ protected:
     int experience;
     int level;
 public:
-    Player(string, int, int, int, int);
+    Player(char[30], int, int, int, int);
     void doAttack(Character *target) override;
     void takeDamage(int damage) override;
 
@@ -26,7 +26,6 @@ public:
     void gainExperience(int);
 
     Action takeAction(vector<Enemy*>enemies);
-    bool canFlee();
 
 };
 

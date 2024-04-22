@@ -13,7 +13,7 @@ bool compareSpeed(Enemy *a, Enemy *b){
     return a->getSpeed() > b->getSpeed();
 }
 
-Player::Player(string n, int h, int a, int d, int s) : Character(n,h,a,d,s,true){
+Player::Player(char n[30], int h, int a, int d, int s) : Character(n,h,a,d,s,true){
     experience = 0;
     level=1;
 }
@@ -37,9 +37,7 @@ void Player::flee(vector <Enemy*> enemies) {
     std::sort(enemies.begin(), enemies.end(), compareSpeed);
     Enemy* fastestEnemy = enemies[0];
 
-    //SE CREA LA VARIABLE FLEED PARA SABER SI ES MAS RAPIDO PLAYER QUE ENEMY
-    //SE INICIALIZA EN FALSE, PARA LUEGO SI SE CUMPLE LA CONDICION DE ESCAPAR
-    //SE DECLARA COMO TRUE Y SI NO SE CUMPLE, SE QUEDA COMO FALSE DE QUE NO ESCAPO
+
     bool fleed = false;
     if(this->getSpeed() > fastestEnemy->getSpeed()){
         fleed = true;
@@ -48,8 +46,13 @@ void Player::flee(vector <Enemy*> enemies) {
         //LA CHANCE QUE TIENES DE ESCAPAR
         srand(time(NULL));
         int chance = rand()%100;
-        cout<<"chance: "<<chance<<endl;
+        cout<<"chance to flee: "<<chance<<endl;
         fleed = chance > 75;
+        if(fleed){
+            fleed = true;
+        }else{
+            cout<<this->getName()<<" YOU CANT FLEE, FIGHT"<<endl;
+        }
     }
 
     this->fleed = fleed;

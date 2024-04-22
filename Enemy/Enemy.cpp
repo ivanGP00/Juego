@@ -2,21 +2,24 @@
 #include <iostream>
 
 using namespace std;
+int Enemy::getRandomNumber(){
+    srand(time(NULL));
+    int getChance = rand() % 100;
+    return getChance;
+}
 
 int getRollAttack(int attack){
     int lowerLimit = attack * .80;
     return (rand() % (attack - lowerLimit + 1)) + lowerLimit;
 }
 
-Enemy::Enemy(string name, int health, int attack, int defense, int speed) : Character(name, health, attack, defense, speed, false) {
+Enemy::Enemy(char name[30], int health, int attack, int defense, int speed) : Character(name, health, attack, defense, speed, false) {
 }
 
 void Enemy::doAttack(Character *target) {
-    if (!hasEscapedSuccessfully()) { // Verifica si el enemigo ha huido antes de atacar
         int rolledAttack = getRollAttack(getAttack());
         int trueDamage = target->getDefense() > rolledAttack ? 0 : rolledAttack - target->getDefense();
         target->takeDamage(trueDamage);
-    }
 }
 
 void Enemy::takeDamage(int damage) {
@@ -43,35 +46,36 @@ Character* Enemy::getTarget(vector<Player *> teamMembers) {
     return teamMembers[targetIndex];
 }
 
+void Enemy::failScapeEnemy(vector<Player *> player){
+    if(this->getHealth() < 15){
+        cout<<this->getName()<<" ----triying to scape----"<<endl;
+        cout << "Chance: " << getRandomNumber() << endl;
+        cout<<this->getName()<<" YOU CANT FLEE, FIGHT"<<endl;
+    }
+}
+
+
 Action Enemy::takeAction(vector<Player *> player) {
     Action myAction;
     myAction.speed = getSpeed();
     myAction.suscriber = this;
     Character* target = getTarget(player);
-    myAction.target=target;
-    myAction.action = [this, target](){
-        doAttack(target);
-    };
-    tryToFlee();
+
+    if (this->getHealth() < 15 && getRandomNumber() > 80) {
+        myAction.action = [this, target]() {
+            cout << "Chance: " << getRandomNumber() << endl;
+            this->fleed = true;
+        };
+    } else {
+        myAction.target = target;
+        myAction.action = [this, target, &player]() {
+            failScapeEnemy(player);
+            doAttack(target);
+        };
+    }
 
     return myAction;
 }
 
-void Enemy::tryToFlee() {
-    srand(time(NULL));
-    int chance = rand() % 100;
-    // Si el enemigo tiene menos de 15 de vida y la probabilidad es
-    // mayor a 80, huye
-    if (getHealth() < 15 && chance > 80) {
-        setEscaped(true);
-    }
-}
 
-bool Enemy::hasEscapedSuccessfully() {
-    return hasEscaped;
-}
-
-void Enemy::setEscaped(bool escaped) {
-    hasEscaped = escaped;
-}
 

@@ -9,9 +9,9 @@ int main() {
     cout<<"\tWELCOME TO MY GAME\n"<<endl;
 
                                 //name   vida atack defensa speed
-    Player *player = new Player("Canelo", 50, 10, 7, 8);
-    Enemy *enemy = new Enemy("Mcgregor", 16, 5, 3, 7);
-    Enemy *enemy2 = new Enemy("Jones", 30, 5, 4, 2);
+    Player *player = new Player("Canelo", 20, 7, 2, 5);
+    Enemy *enemy = new Enemy("Mcgregor", 17, 5, 3, 7);
+    Enemy *enemy2 = new Enemy("Jones", 30, 4, 4, 3);
 
     vector<Character *> participants;
     participants.push_back(player);
@@ -19,7 +19,6 @@ int main() {
     participants.push_back(enemy2);
 
     Combat *combat = new Combat(participants);
-
     combat->doCombat();
 
 

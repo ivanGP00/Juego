@@ -1,21 +1,21 @@
 #include "Character.h"
+#include <cstring>
 
-Character::Character(string n, int h, int a, int d, int s, bool i) {
-    name=n;
+Character::Character(char n[30], int h, int a, int d, int s, bool i) {
+    strcpy_s(name, n);
     health=h;
     attack=a;
     defense=d;
     speed=s;
     isPlayer=i;
     fleed=false;
-    fleedEnemy=false;
 }
 
-string Character::getName(){
+char* Character::getName(){
     return name;
 }
-void Character::setName(string n){
-    name=n;
+void Character::setName(char n[30]){
+    strcpy_s(name, n);
 }
 
 int Character::getHealth(){
@@ -47,7 +47,7 @@ void Character::setSpeed(int s){
 }
 
 string Character::toString() {
-    return "Name: " + name + "\nHealth: " + to_string(health) + "\nAttack: " + to_string(attack) + "\nDefense: " + to_string(defense) + "\nSpeed: " + to_string(speed) + "\n";
+    return "Name: " + string(name) + "\nHealth: " + to_string(health) + "\nAttack: " + to_string(attack) + "\nDefense: " + to_string(defense) + "\nSpeed: " + to_string(speed) + "\n";
 }
 
 bool Character::getIsPlayer() {
