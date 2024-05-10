@@ -13,9 +13,15 @@ protected:
     int experience;
     int level;
 public:
-    Player(char[30], int, int, int, int);
+    Player(char*, int, int, int, int, int, int);
+    //Player(char*, int, int, int, int, bool, int, int);
+
     void doAttack(Character *target) override;
     void takeDamage(int damage) override;
+    char* serialize();
+    //static const unsigned int BUFFER_SIZE = sizeof (name) + sizeof (health) + sizeof (attack) + sizeof (defense) + sizeof (speed) + sizeof (isPlayer) + sizeof (experience) + sizeof (level);
+
+    //static Player* unserialize(char* buffer);
 
     Character* getTarget(vector<Enemy *> enemies);
 
@@ -23,9 +29,14 @@ public:
     void flee(vector <Enemy*> enemies);
     void emote();
     void levelUp();
-    void gainExperience(int);
+    void gainExperience(Enemy* enemy);
 
     Action takeAction(vector<Enemy*>enemies);
+
+
+//private:
+  //  char buffer[Player::BUFFER_SIZE];
+
 
 };
 

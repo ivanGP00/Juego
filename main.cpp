@@ -8,10 +8,10 @@ int main() {
     cout<<"\n";
     cout<<"\tWELCOME TO MY GAME\n"<<endl;
 
-                                //name   vida atack defensa speed
-    Player *player = new Player("Canelo", 20, 7, 2, 5);
-    Enemy *enemy = new Enemy("Mcgregor", 17, 5, 3, 7);
-    Enemy *enemy2 = new Enemy("Jones", 30, 4, 4, 3);
+                                //name   vida atack defensa speed  xp  level
+    Player *player = new Player("Canelo", 20, 10, 2, 5, 10, 2);
+    Enemy *enemy = new Enemy("Mcgregor", 17, 5, 3, 7, 5, 1);
+    Enemy *enemy2 = new Enemy("Jones", 30, 4, 4, 3, 15, 2);
 
     vector<Character *> participants;
     participants.push_back(player);

@@ -13,7 +13,7 @@ private:
     //bandera para saber si enemy huyo.
     bool hasEscaped;
 public:
-    Enemy(char[30], int, int, int, int);
+    Enemy(char*, int, int, int, int, int, int);
     void doAttack(Character *target) override;
     void takeDamage(int damage) override;
     Character* getTarget(vector<Player*> enemies);
@@ -26,7 +26,7 @@ public:
 
     void flee(vector <Player*> teamMembers);
 
-    void failScapeEnemy(vector<Player *> player);
+    void failScapeEnemy();
 
 
 };

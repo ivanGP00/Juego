@@ -36,6 +36,9 @@ public:
     string participantsToString();
     void fleeEnemy(Enemy* enemy);
 
+    void increaseEnemyStats(int points);
+
+
 };
 
 

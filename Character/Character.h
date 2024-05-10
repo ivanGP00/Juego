@@ -15,16 +15,18 @@ protected:
     int speed;
     bool isPlayer;
     bool fleed;
+    int experience;
+    int level;
 
 public:
-    Character(char[30], int , int , int , int , bool );
+    Character(char*, int , int , int , int , bool, int, int );
 
     virtual void doAttack(Character *target) = 0;
     virtual void takeDamage(int damage) = 0;
 
 
     char* getName();
-    void setName(char[30]);
+    void setName(char*);
 
     int getHealth();
     void setHealth(int);
@@ -43,6 +45,12 @@ public:
     string toString();
 
     bool hasFleed();
+
+    int getXP();
+    void setXP(int _xp);
+
+    int getLevel();
+    void setLevel(int _level);
 };
 
 

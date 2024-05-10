@@ -1,6 +1,7 @@
 #include "Combat.h"
 #include <iostream>
 #include <algorithm>
+#include "Player.h"
 using namespace std;
 bool compareSpeed(Character *a, Character *b){
     return a->getSpeed() > b->getSpeed();
@@ -48,17 +49,50 @@ void Combat::prepareCombat() {
 void Combat::doCombat() {
     prepareCombat();
 
-    //iteracion por ronda
-    while(enemies.size() != 0 && teamMembers.size() != 0){
+    // Este while es una iteración por ronda
+    while (enemies.size() != 0 && teamMembers.size() != 0) {
         registerActions();
         executeActions();
     }
-    if(enemies.size()==0){
-        cout<<"You have won the combat"<<endl;
-    }else{
-        cout<<"The enemies have won the combat -- GAME OVER"<<endl;
+    if (enemies.size() == 0) {
+        cout << "You have won the combat." << endl;
+
+        for (Enemy* enemy : enemies) {
+            if (enemy->getHealth() <= 0) {
+                cout << "Enemy had " << enemy->getXP() << " experience." << endl;
+            }
+        }
+        for (Player* player : teamMembers) {
+            cout << "Player " << player->getName() << " has won " << player->getXP() << " experience." << endl;
+        }
+    } else {
+        cout << "The enemies have won the combat - Game Over." << endl;
+    }
+
+
+    //IMPRIMIR Atributos con el nivel aumentadp
+    for (Player *player: teamMembers) {
+        cout << "Level up " << endl;
+        cout <<"Health: "<<player->getHealth() << endl;
+        cout <<"Attack: "<<player->getAttack() << endl;
+        cout <<"Defense: "<<player->getDefense() << endl;
     }
 }
+
+/*void Combat::increaseEnemyStats(int points) {
+    // DAR LOS PUNTOS A LOS ENEMIGOS
+    for (Enemy *enemy: enemies) {
+
+        // Aumentar atributos
+        int healthIncrease = points / 2;
+        int attackIncrease = points / 2;
+        int defenseIncrease = points - healthIncrease - attackIncrease;
+        enemy->setHealth(enemy->getHealth() + healthIncrease);
+        enemy->setAttack(enemy->getAttack() + attackIncrease);
+        enemy->setDefense(enemy->getDefense() + defenseIncrease);
+    }
+}
+ */
 
 void Combat::registerActions(){
     vector<Character*>::iterator participant = participants.begin();

@@ -13,7 +13,7 @@ int getRollAttack(int attack){
     return (rand() % (attack - lowerLimit + 1)) + lowerLimit;
 }
 
-Enemy::Enemy(char name[30], int health, int attack, int defense, int speed) : Character(name, health, attack, defense, speed, false) {
+Enemy::Enemy(char* name, int health, int attack, int defense, int speed, int xp, int lev) : Character(name, health, attack, defense, speed, false, xp, lev) {
 }
 
 void Enemy::doAttack(Character *target) {
@@ -46,7 +46,7 @@ Character* Enemy::getTarget(vector<Player *> teamMembers) {
     return teamMembers[targetIndex];
 }
 
-void Enemy::failScapeEnemy(vector<Player *> player){
+void Enemy::failScapeEnemy(){
     if(this->getHealth() < 15){
         cout<<this->getName()<<" ----triying to scape----"<<endl;
         cout << "Chance: " << getRandomNumber() << endl;
@@ -62,14 +62,14 @@ Action Enemy::takeAction(vector<Player *> player) {
     Character* target = getTarget(player);
 
     if (this->getHealth() < 15 && getRandomNumber() > 80) {
+        cout << "Chance: " << getRandomNumber() << endl;
         myAction.action = [this, target]() {
-            cout << "Chance: " << getRandomNumber() << endl;
             this->fleed = true;
         };
     } else {
         myAction.target = target;
-        myAction.action = [this, target, &player]() {
-            failScapeEnemy(player);
+        myAction.action = [this, target]() {
+            failScapeEnemy();
             doAttack(target);
         };
     }
