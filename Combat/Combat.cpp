@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include "Player.h"
+#include "Enemy.h"
 using namespace std;
 bool compareSpeed(Character *a, Character *b){
     return a->getSpeed() > b->getSpeed();
@@ -76,11 +77,11 @@ void Combat::doCombat() {
         cout <<"Health: "<<player->getHealth() << endl;
         cout <<"Attack: "<<player->getAttack() << endl;
         cout <<"Defense: "<<player->getDefense() << endl;
+        cout <<"Speed: "<<player->getSpeed() << endl;
     }
 }
 
-/*void Combat::increaseEnemyStats(int points) {
-    // DAR LOS PUNTOS A LOS ENEMIGOS
+void Combat::increaseEnemyStats(int points) {
     for (Enemy *enemy: enemies) {
 
         // Aumentar atributos
@@ -92,7 +93,7 @@ void Combat::doCombat() {
         enemy->setDefense(enemy->getDefense() + defenseIncrease);
     }
 }
- */
+
 
 void Combat::registerActions(){
     vector<Character*>::iterator participant = participants.begin();
@@ -140,6 +141,12 @@ void Combat::checkParticipantStatus(Character* participant) {
         if(participant->getIsPlayer()){
             teamMembers.erase(remove(teamMembers.begin(), teamMembers.end(), participant), teamMembers.end());
         }else{
+            //GAIN EXPERIENCE
+            for (Player* player : teamMembers) {
+                for (Enemy* enemy : enemies) {
+                    player->gainExperience(enemy); // Aquí pasamos cada enemigo a gainExperience()
+                }
+            }
             enemies.erase(remove(enemies.begin(), enemies.end(), participant), enemies.end());
         }
         participants.erase(remove(participants.begin(), participants.end(), participant), participants.end());

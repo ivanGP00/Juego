@@ -14,8 +14,8 @@ bool compareSpeed(Enemy *a, Enemy *b){
 }
 
 Player::Player(char* n, int h, int a, int d, int s, int xp, int lev) : Character(n,h,a,d,s,true,xp,lev){
-    experience = 0;
-    level=1;
+experience=111;
+level=1;
 }
 
 /*Player::Player(char* n, int h, int a, int d, int s, bool is, int exp, int le) : Character(n,h,a,d,s,is){
@@ -135,10 +135,10 @@ void Player::levelUp() {
         level++;
         experience=0;
 
-        health +=5;
-        attack += 5;
-        defense += 5;
-        speed += 5;
+        health +=500;
+        attack += 500;
+        defense += 500;
+        speed += 500;
 
         cout<<"NICE!! now your are level: "<<level<<endl;
     }
